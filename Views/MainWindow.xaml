@@ -6,8 +6,10 @@
         xmlns:views="clr-namespace:FrameDataApp.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid Margin="20 10" MaxWidth="600">
-        <views:MakeCharacterView/>
         
+        <views:MakeGameView Loaded="MakeGameView_Loaded"/>
+
     </Grid>
 </Window>

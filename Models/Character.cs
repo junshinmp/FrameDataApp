@@ -6,6 +6,7 @@ namespace FrameDataApp.Models
 {
     public class Character
     {
+        public long CharacterId { get; set; }
         public string Name { get; set; } = string.Empty;
 
         public double WalkSpeed { get; set; }

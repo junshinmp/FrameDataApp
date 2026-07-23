@@ -20,4 +20,9 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
+    private void MakeCharacterView_Loaded(object sender, RoutedEventArgs e)
+    {
+
+    }
 }
