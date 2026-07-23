@@ -8,7 +8,7 @@ namespace FrameDataApp.Models
     {
         public int StartUp {  get; set; }
         public int Active { get; set; }
-        public int Recovery { get; set; 
+        public int Recovery { get; set; }
 
         public int OnBlock { get; set; }
         public int OnHit { get; set; }
