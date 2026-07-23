@@ -73,3 +73,175 @@ Build & Run:
    * [ ] JSON serialization for loading and saving custom character frame data files.
    * [ ] Visual frame timeline component showing Startup vs. Active vs. Recovery phases.
    * [ ] Side-by-side character matchup comparison screen.
+
+  *UML Diagram
+  ```mermaid
+classDiagram
+    %% --- BASE & INFRASTRUCTURE ---
+    class BaseViewModel {
+        <<Abstract>>
+        +event PropertyChangedEventHandler PropertyChanged
+        #OnPropertyChanged(propertyName: string)
+        #SetProperty~T~(storage: ref T, value: T, propertyName: string) bool
+    }
+
+    class RelayCommand {
+        -Action~object~ _execute
+        -Predicate~object~ _canExecute
+        +CanExecute(parameter: object) bool
+        +Execute(parameter: object)
+    }
+
+    %% --- MODELS ---
+    class Game {
+        +string Title
+        +List~Character~ Characters
+    }
+
+    class Character {
+        +string Name
+        +double WalkSpeed
+        +double DashSpeed
+        +List~Move~ Moves
+    }
+
+    class Move {
+        +string MoveName
+        +string CommandInput
+        +FrameData Stats
+        +CancelType Cancelable
+    }
+
+    class FrameData {
+        +int StartUp
+        +int Active
+        +int Recovery
+        +int OnBlock
+        +int OnHit
+    }
+
+    class CancelType {
+        <<Enumeration>>
+        Special
+        Super
+        Chain
+        None
+    }
+
+    class Combo {
+        <<Future>>
+        +string ComboName
+        +Character Character
+        +List~Move~ MoveSequence
+        +int TotalDamage
+        +bool IsValidSequence()
+    }
+
+    %% --- SERVICES ---
+    class FrameDataService {
+        -List~Game~ _games
+        +GetCharacters() List~Character~
+        +GetMovesForCharacter(charName: string) List~Move~
+        +AddCharacter(name: string, walk: double, dash: double) bool
+        +AddMoveToCharacter(charName: string, move: Move) bool
+        +ValidateCombo(moves: List~Move~) bool [Future]
+    }
+
+    %% --- VIEWMODELS ---
+    class MainViewModel {
+        +BaseViewModel CurrentView
+        +ICommand NavigateMakeCharacterCommand
+        +ICommand NavigateFrameDataCommand
+        +ICommand NavigateComboMakerCommand [Future]
+    }
+
+    class FrameDataViewModel {
+        -FrameDataService _service
+        +ObservableCollection~string~ CharacterNames
+        +ObservableCollection~Move~ DisplayMoves
+        +string SelectedCharacter
+        +string SearchQuery
+        +ICommand FilterMovesCommand
+    }
+
+    class MakeCharacterViewModel {
+        -FrameDataService _service
+        +string Name
+        +double WalkSpeed
+        +double DashSpeed
+        +ICommand SubmitCommand
+    }
+
+    class MakeMoveViewModel {
+        <<Future>>
+        -FrameDataService _service
+        +string SelectedCharacter
+        +string MoveName
+        +string CommandInput
+        +int StartUp
+        +int Active
+        +int Recovery
+        +int OnBlock
+        +int OnHit
+        +CancelType SelectedCancelType
+        +ICommand SaveMoveCommand
+    }
+
+    class ComboMakerViewModel {
+        <<Future>>
+        -FrameDataService _service
+        +Character SelectedCharacter
+        +ObservableCollection~Move~ AvailableMoves
+        +ObservableCollection~Move~ CurrentComboSequence
+        +int TotalDamage
+        +ICommand AddMoveToComboCommand
+        +ICommand RemoveMoveFromComboCommand
+        +ICommand SaveComboCommand
+    }
+
+    %% --- VIEWS ---
+    class MainWindow {
+        <<View>>
+    }
+
+    class MakeCharacterView {
+        <<View>>
+    }
+
+    class FrameDataView {
+        <<Future View>>
+    }
+
+    class MakeMoveView {
+        <<Future View>>
+    }
+
+    class ComboMakerView {
+        <<Future View>>
+    }
+
+    %% --- RELATIONSHIPS ---
+    BaseViewModel <|-- MainViewModel
+    BaseViewModel <|-- FrameDataViewModel
+    BaseViewModel <|-- MakeCharacterViewModel
+    BaseViewModel <|-- MakeMoveViewModel
+    BaseViewModel <|-- ComboMakerViewModel
+
+    Game "1" *-- "many" Character
+    Character "1" *-- "many" Move
+    Move "1" *-- "1" FrameData
+    Move "1" *-- "1" CancelType
+    Combo "1" o-- "many" Move
+
+    MainViewModel o-- BaseViewModel : Controls Current Active View
+    FrameDataViewModel --> FrameDataService
+    MakeCharacterViewModel --> FrameDataService
+    MakeMoveViewModel --> FrameDataService
+    ComboMakerViewModel --> FrameDataService
+
+    MainWindow ..> MainViewModel : DataContext
+    MakeCharacterView ..> MakeCharacterViewModel : DataContext
+    FrameDataView ..> FrameDataViewModel : DataContext
+    MakeMoveView ..> MakeMoveViewModel : DataContext
+    ComboMakerView ..> ComboMakerViewModel : DataContext
+  ```
