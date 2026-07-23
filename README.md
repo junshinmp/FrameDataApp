@@ -68,13 +68,13 @@ Build & Run:
 *Press F5 or click Start in Visual Studio to compile and run the application.
 ---
 
-  *Roadmap
+  **Roadmap**
 
    * [ ] JSON serialization for loading and saving custom character frame data files.
    * [ ] Visual frame timeline component showing Startup vs. Active vs. Recovery phases.
    * [ ] Side-by-side character matchup comparison screen.
 
-  *UML Diagram
+  **UML Diagram**
   ```mermaid
 classDiagram
     %% --- BASE & INFRASTRUCTURE ---
