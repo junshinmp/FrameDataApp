@@ -46,7 +46,12 @@ namespace FrameDataApp.Commands
             return !string.IsNullOrWhiteSpace(_viewModel.Name) && base.CanExecute(parameter);
         }
 
-
+        /// <summary>
+        /// Executes the process of creating a new character.
+        /// Validates input, checks for duplicate entries via <c>CharacterService</c>,
+        /// saves the record, and clears the viewmodel fields upon success.
+        /// </summary>
+        /// <param name="parameter">Optional parameter passed from the UI (unused in this command).</param>
         public override void Execute(object? parameter)
         {
             if (string.IsNullOrWhiteSpace(_viewModel.Name))
@@ -82,6 +87,13 @@ namespace FrameDataApp.Commands
             }
         }
 
+        /// <summary>
+        /// Handles property change notifications from the <c>MakeCharacterViewModel</c>.
+        /// Specifically monitors the <c>Name</c> property to trigger <c>OnCanExecutedChanged</c>,
+        /// enabling or disabling the save button in real time.
+        /// </summary>
+        /// <param name="sender">The object that raised the event (the ViewModel).</param>
+        /// <param name="e">Event args containing the name of the property that changed.</param>
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MakeCharacterViewModel.Name))

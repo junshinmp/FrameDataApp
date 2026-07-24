@@ -7,11 +7,29 @@ using System.Windows;
 
 namespace FrameDataApp.Commands
 {
+    /// <summary>
+    /// Class <c>MakeMoveCommand</c> inherits from <c>CommandBase</c>,
+    /// ensuring that all properties required to create a new move and its frame data
+    /// are collected properly from the <c>MakeMoveView</c>.
+    /// 
+    /// This inherits all properties from the <c>CommandBase</c> class.
+    /// </summary>
     public class MakeMoveCommand : CommandBase
     {
+        /// <summary>
+        /// Holds the local viewmodel and MoveService
+        /// for executing and transferring move data properly.
+        /// </summary>
         private readonly MakeMoveViewModel _viewModel;
         private readonly MoveService _moveService;
 
+        /// <summary>
+        /// Default Constructor for <c>MakeMoveCommand</c>, requiring
+        /// a pass of viewModel and moveService for proper functionality.
+        /// Subscribes to the ViewModel's property change notifications.
+        /// </summary>
+        /// <param name="viewModel">Local ViewModel containing form state for creating a move.</param>
+        /// <param name="moveService">Local Service for executing move database and storage operations.</param>
         public MakeMoveCommand(MakeMoveViewModel viewModel, MoveService moveService)
         {
             _viewModel = viewModel;
@@ -20,6 +38,12 @@ namespace FrameDataApp.Commands
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
+        /// <summary>
+        /// Checks if all required text fields (CharacterName, MoveName, CommandInput)
+        /// are populated, greying out the button if any are missing or whitespace.
+        /// </summary>
+        /// <param name="parameter">Optional parameter passed from the UI (unused in this command).</param>
+        /// <returns>True if all required fields are non-empty; otherwise false.</returns>
         public override bool CanExecute(object? parameter)
         {
             return !string.IsNullOrWhiteSpace(_viewModel.CharacterName) &&
@@ -28,6 +52,12 @@ namespace FrameDataApp.Commands
                    base.CanExecute(parameter);
         }
 
+        /// <summary>
+        /// Executes the process of creating and assigning a move to a specified character.
+        /// Constructs the <c>FrameData</c> object and cancel options from the ViewModel,
+        /// submits the data via <c>MoveService</c>, provides user feedback, and resets input fields upon success.
+        /// </summary>
+        /// <param name="parameter">Optional parameter passed from the UI (unused in this command).</param>
         public override void Execute(object? parameter)
         {
             var frameData = new FrameData
@@ -69,6 +99,13 @@ namespace FrameDataApp.Commands
             }
         }
 
+        /// <summary>
+        /// Handles property change notifications from the <c>MakeMoveViewModel</c>.
+        /// Specifically monitors essential input fields (<c>CharacterName</c>, <c>MoveName</c>, and <c>CommandInput</c>)
+        /// to trigger <c>OnCanExecutedChanged</c>, enabling or disabling the save button in real time.
+        /// </summary>
+        /// <param name="sender">The object that raised the event (the ViewModel).</param>
+        /// <param name="e">Event args containing the name of the property that changed.</param>
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MakeMoveViewModel.CharacterName) ||
