@@ -1,4 +1,5 @@
 ﻿using FrameDataApp.Services;
+using FrameDataApp.Commands;
 using System.Windows.Input;
 
 namespace FrameDataApp.ViewModel
@@ -30,7 +31,6 @@ namespace FrameDataApp.ViewModel
 
         public ICommand SubmitCommand { get; }
 
-        // Parameterless constructor for WPF
         public MakeCharacterViewModel() : this(ServiceStore.Instance.CharacterService)
         {
         }
@@ -38,6 +38,7 @@ namespace FrameDataApp.ViewModel
         public MakeCharacterViewModel(CharacterService characterService)
         {
             _service = characterService;
+            SubmitCommand = new MakeCharacterCommand(this, _service);
         }
     }
 }
