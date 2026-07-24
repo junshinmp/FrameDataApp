@@ -70,6 +70,7 @@ namespace FrameDataApp.Services
         public void SeedDefaultData()
         {
             AddCharacter("Ryu", walkSpeed: 0.047, dashSpeed: 0.21);
+            System.Diagnostics.Debug.WriteLine($"[DEBUG] Seeded characters! Total count: {_characterList.Count}");
         }
     }
 }

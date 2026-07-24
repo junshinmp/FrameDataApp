@@ -25,4 +25,14 @@ public partial class MainWindow : Window
     {
 
     }
+
+    private void MakeGameView_Loaded(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void MakeMoveView_Loaded(object sender, RoutedEventArgs e)
+    {
+
+    }
 }

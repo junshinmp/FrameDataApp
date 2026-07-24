@@ -1,4 +1,5 @@
-﻿using FrameDataApp.Models;
+﻿using FrameDataApp.Commands;
+using FrameDataApp.Models;
 using FrameDataApp.Services;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,8 @@ namespace FrameDataApp.ViewModel
 {
     public class MakeMoveViewModel : BaseViewModel
     {
-        private readonly MoveService _service;
+        private readonly MoveService _moveService;
+        private readonly CharacterService _characterService;
 
         private string _characterName = string.Empty;
         private string _moveName = string.Empty;
@@ -21,6 +23,7 @@ namespace FrameDataApp.ViewModel
         private int _onBlock;
 
         private CancelType? _selectedCancelType;
+
         public string CharacterName
         {
             get => _characterName;
@@ -71,16 +74,24 @@ namespace FrameDataApp.ViewModel
 
         public IEnumerable<CancelType> CancelOptions => Enum.GetValues(typeof(CancelType)).Cast<CancelType>();
 
-        public ICommand SaveMoveCommand { get; }
+        public List<string> AvailableCharacters => _characterService.GetAllCharacterNames();
 
-        // Parameterless constructor for WPF XAML DataContext instantiation
-        public MakeMoveViewModel() : this(ServiceStore.Instance.MoveService)
+        public ICommand SaveMoveCommand { get; private set; } = null!;
+        public MakeMoveViewModel() : this(ServiceStore.Instance.MoveService, ServiceStore.Instance.CharacterService)
         {
         }
 
-        public MakeMoveViewModel(MoveService moveService)
+        public MakeMoveViewModel(MoveService moveService, CharacterService characterService)
         {
-            _service = moveService;
+            _moveService = moveService;
+            _characterService = characterService;
+
+            SaveMoveCommand = new MakeMoveCommand(this, _moveService);
+        }
+
+        public void RefreshCharacters()
+        {
+            OnPropertyChanged(nameof(AvailableCharacters));
         }
     }
 }
