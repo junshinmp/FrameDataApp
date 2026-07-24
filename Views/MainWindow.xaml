@@ -3,13 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodel="clr-namespace:FrameDataApp.ViewModel"
         xmlns:views="clr-namespace:FrameDataApp.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800">
 
     <Grid Margin="20 10" MaxWidth="600">
-        
-        <views:MakeMoveView Loaded="MakeMoveView_Loaded"/>
+
+        <ContentControl Content="{Binding CurrentViewModel}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type viewmodel:HomeViewModel}">
+                    <views:HomeView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodel:MakeCharacterViewModel}">
+                    <views:MakeCharacterView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodel:MakeGameViewModel}">
+                    <views:MakeGameView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodel:MakeMoveViewModel}">
+                    <views:MakeMoveView />
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
 
     </Grid>
 </Window>

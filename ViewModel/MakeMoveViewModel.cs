@@ -1,6 +1,7 @@
 ﻿using FrameDataApp.Commands;
 using FrameDataApp.Models;
 using FrameDataApp.Services;
+using FrameDataApp.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,9 @@ using System.Windows.Input;
 
 namespace FrameDataApp.ViewModel
 {
-    public class MakeMoveViewModel : BaseViewModel
+    public class MakeMoveViewModel : ViewModelBase
     {
+        private readonly NavigationStore _navigationStore;
         private readonly MoveService _moveService;
         private readonly CharacterService _characterService;
 
@@ -23,6 +25,34 @@ namespace FrameDataApp.ViewModel
         private int _onBlock;
 
         private CancelType? _selectedCancelType;
+
+        // Main Constructor used during Navigation
+        public MakeMoveViewModel(
+            NavigationStore navigationStore,
+            MoveService moveService,
+            CharacterService characterService)
+        {
+            _navigationStore = navigationStore;
+            _moveService = moveService;
+            _characterService = characterService;
+
+            SaveMoveCommand = new MakeMoveCommand(this, _moveService);
+
+            // Command to navigate back home (optional / for cancel buttons)
+            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(
+                navigationStore,
+                () => new HomeViewModel(
+                    navigationStore,
+                    ServiceStore.Instance.GameService,
+                    characterService,
+                    moveService));
+        }
+
+        // Parameterless constructor for XAML Designer / Fallback
+        public MakeMoveViewModel()
+            : this(new NavigationStore(), ServiceStore.Instance.MoveService, ServiceStore.Instance.CharacterService)
+        {
+        }
 
         public string CharacterName
         {
@@ -76,18 +106,8 @@ namespace FrameDataApp.ViewModel
 
         public List<string> AvailableCharacters => _characterService.GetAllCharacterNames();
 
-        public ICommand SaveMoveCommand { get; private set; } = null!;
-        public MakeMoveViewModel() : this(ServiceStore.Instance.MoveService, ServiceStore.Instance.CharacterService)
-        {
-        }
-
-        public MakeMoveViewModel(MoveService moveService, CharacterService characterService)
-        {
-            _moveService = moveService;
-            _characterService = characterService;
-
-            SaveMoveCommand = new MakeMoveCommand(this, _moveService);
-        }
+        public ICommand SaveMoveCommand { get; private set; }
+        public ICommand NavigateHomeCommand { get; }
 
         public void RefreshCharacters()
         {

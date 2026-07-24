@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace FrameDataApp.ViewModel
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
