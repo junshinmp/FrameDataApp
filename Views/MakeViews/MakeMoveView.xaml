@@ -1,0 +1,183 @@
+﻿<UserControl x:Class="FrameDataApp.Views.MakeViews.MakeMoveView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FrameDataApp.Views"
+             xmlns:vm="clr-namespace:FrameDataApp.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#18181C"/>
+            <Setter Property="Foreground" Value="#EEEEF2"/>
+            <Setter Property="BorderBrush" Value="#2A2A32"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="2,0"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#4F4F5E"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#6366F1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#18181C"/>
+            <Setter Property="Foreground" Value="#EEEEF2"/>
+            <Setter Property="BorderBrush" Value="#2A2A32"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#6366F1"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="18">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#4F46E5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#18181C"/>
+            <Setter Property="Foreground" Value="#9898A6"/>
+            <Setter Property="BorderBrush" Value="#2A2A32"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="18">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#25252E"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#0F0F12">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Border Background="#1E1E24" 
+                    BorderBrush="#2A2A32" 
+                    BorderThickness="1" 
+                    CornerRadius="12" 
+                    Padding="30"
+                    MaxWidth="650"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0,20,0,20">
+
+                <StackPanel>
+                    <TextBlock Text="CREATE MOVE" FontSize="18" FontWeight="Bold" Foreground="#EEEEF2"/>
+                    <TextBlock Text="Configure frame data metrics and cancel properties" FontSize="12" Foreground="#71717A" Margin="0,4,0,20"/>
+
+                    <!-- Character Selector -->
+                    <TextBlock Text="Select Character" Foreground="#A1A1AA" FontSize="12" FontWeight="Medium" Margin="0,0,0,6"/>
+                    <ComboBox ItemsSource="{Binding AvailableCharacters}" SelectedItem="{Binding CharacterName}" Margin="0,0,0,16"/>
+
+                    <!-- Move Name & Command Input Row -->
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Move Name" Foreground="#A1A1AA" FontSize="12" FontWeight="Medium" Margin="0,0,0,6"/>
+                            <TextBox Text="{Binding MoveName, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Command Input (e.g. 236P)" Foreground="#A1A1AA" FontSize="12" FontWeight="Medium" Margin="0,0,0,6"/>
+                            <TextBox Text="{Binding CommandInput, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Frame Data Section -->
+                    <Expander Header="Frame Data Metrics" Foreground="#EEEEF2" FontWeight="SemiBold" IsExpanded="True" Margin="0,0,0,16">
+                        <Border Background="#141417" BorderBrush="#2A2A32" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,8,0,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Startup -->
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Startup" Foreground="#A1A1AA" FontSize="11" Margin="0,0,0,4"/>
+                                <TextBox Grid.Row="1" Grid.Column="0" Height="32" Text="{Binding StartUp, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <!-- Active -->
+                                <TextBlock Grid.Row="0" Grid.Column="2" Text="Active" Foreground="#A1A1AA" FontSize="11" Margin="0,0,0,4"/>
+                                <TextBox Grid.Row="1" Grid.Column="2" Height="32" Text="{Binding Active, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <!-- Recovery -->
+                                <TextBlock Grid.Row="0" Grid.Column="4" Text="Recovery" Foreground="#A1A1AA" FontSize="11" Margin="0,0,0,4"/>
+                                <TextBox Grid.Row="1" Grid.Column="4" Height="32" Text="{Binding Recovery, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <!-- On Block -->
+                                <TextBlock Grid.Row="0" Grid.Column="6" Text="On Block" Foreground="#A1A1AA" FontSize="11" Margin="0,0,0,4"/>
+                                <TextBox Grid.Row="1" Grid.Column="6" Height="32" Text="{Binding OnBlock, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </Border>
+                    </Expander>
+
+                    <!-- Cancel Options -->
+                    <TextBlock Text="Cancel Options" Foreground="#A1A1AA" FontSize="12" FontWeight="Medium" Margin="0,0,0,6"/>
+                    <ComboBox ItemsSource="{Binding CancelOptions}" SelectedItem="{Binding SelectedCancelType}" Margin="0,0,0,24"/>
+
+                    <!-- Actions -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Cancel" Command="{Binding NavigateHomeCommand}" Style="{StaticResource SecondaryButtonStyle}" Width="110" Margin="0,0,10,0"/>
+                        <Button Content="Save Move" Command="{Binding SaveMoveCommand}" Style="{StaticResource PrimaryButtonStyle}" Width="130"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

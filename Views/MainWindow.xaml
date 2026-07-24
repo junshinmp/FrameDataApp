@@ -5,27 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodel="clr-namespace:FrameDataApp.ViewModel"
         xmlns:views="clr-namespace:FrameDataApp.Views"
+        xmlns:makeViews="clr-namespace:FrameDataApp.Views.MakeViews"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="Frame Data Hub" Height="650" Width="900"
+        Background="#0F0F12">
 
-    <Grid Margin="20 10" MaxWidth="600">
+    <DockPanel Background="#0F0F12">
+        <!-- 1. Permanent Top Navigation Header -->
+        <views:NavBarView DockPanel.Dock="Top" DataContext="{Binding NavbarViewModel}" />
 
-        <ContentControl Content="{Binding CurrentViewModel}">
-            <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type viewmodel:HomeViewModel}">
-                    <views:HomeView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewmodel:MakeCharacterViewModel}">
-                    <views:MakeCharacterView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewmodel:MakeGameViewModel}">
-                    <views:MakeGameView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewmodel:MakeMoveViewModel}">
-                    <views:MakeMoveView />
-                </DataTemplate>
-            </ContentControl.Resources>
-        </ContentControl>
+        <!-- 2. Dynamic Main Screen Content -->
+        <Grid>
+            <!-- Removed Margin="20" so the dark theme touches edge-to-edge -->
+            <ContentControl Content="{Binding CurrentViewModel}">
+                <ContentControl.Resources>
+                    <!-- Home / Dashboard View -->
+                    <DataTemplate DataType="{x:Type viewmodel:HomeViewModel}">
+                        <views:HomeView />
+                    </DataTemplate>
 
-    </Grid>
+                    <!-- Add Form Views -->
+                    <DataTemplate DataType="{x:Type viewmodel:MakeCharacterViewModel}">
+                        <makeViews:MakeCharacterView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodel:MakeGameViewModel}">
+                        <makeViews:MakeGameView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodel:MakeMoveViewModel}">
+                        <makeViews:MakeMoveView />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </Grid>
+    </DockPanel>
 </Window>

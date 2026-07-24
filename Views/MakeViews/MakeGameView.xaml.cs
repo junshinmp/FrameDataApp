@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FrameDataApp.Views
+namespace FrameDataApp.Views.MakeViews
 {
     /// <summary>
-    /// Interaction logic for MakeMoveView.xaml
+    /// Interaction logic for MakeGame.xaml
     /// </summary>
-    public partial class MakeMoveView : UserControl
+    public partial class MakeGameView : UserControl
     {
-        public MakeMoveView()
+        public MakeGameView()
         {
             InitializeComponent();
         }

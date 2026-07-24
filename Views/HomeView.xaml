@@ -6,57 +6,96 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Border Background="#F4F4F9" 
-            BorderBrush="#CCCCCC" 
-            BorderThickness="1" 
-            CornerRadius="8" 
-            Padding="30">
+    <UserControl.Resources>
+        <!-- Modern Pill Action Button -->
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#18181C"/>
+            <Setter Property="Foreground" Value="#EEEEF2"/>
+            <Setter Property="BorderBrush" Value="#2A2A32"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="21">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#6366F1"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#6366F1"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
 
-        <StackPanel HorizontalAlignment="Center" 
-                    VerticalAlignment="Center" 
-                    Width="300">
+    <Grid Background="#0F0F12">
+        <Border Background="#1E1E24" 
+                BorderBrush="#2A2A32" 
+                BorderThickness="1" 
+                CornerRadius="16" 
+                Padding="36"
+                Width="380"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
 
-            <!-- App Title / Status Indicator -->
-            <TextBlock Text="Frame Data Hub" 
-                       FontSize="26" 
-                       FontWeight="Bold" 
-                       Foreground="#2C3E50" 
-                       HorizontalAlignment="Center" 
-                       Margin="0,0,0,10"/>
+            <StackPanel HorizontalAlignment="Center" Width="308">
 
-            <TextBlock Text="HomeView successfully loaded in MainWindow!" 
-                       FontSize="13" 
-                       Foreground="#27AE60" 
-                       HorizontalAlignment="Center" 
-                       TextWrapping="Wrap"
-                       Margin="0,0,0,25"/>
+                <!-- Badge / Status Indicator -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,12">
+                    <Border Width="8" Height="8" CornerRadius="4" Background="#10B981" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBlock Text="SYSTEM READY" Foreground="#10B981" FontSize="11" FontWeight="Bold"/>
+                </StackPanel>
 
-            <Separator Margin="0,0,0,20"/>
+                <!-- Header Title -->
+                <TextBlock Text="Frame Data Hub" 
+                           FontSize="24" 
+                           FontWeight="Bold" 
+                           Foreground="#EEEEF2" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,6"/>
 
-            <!-- Navigation Tester Buttons -->
-            <TextBlock Text="Quick Actions" 
-                       FontSize="14" 
-                       FontWeight="SemiBold" 
-                       Foreground="#7F8C8D" 
-                       Margin="0,0,0,10"/>
+                <TextBlock Text="Analyze and record character move metrics" 
+                           FontSize="12" 
+                           Foreground="#71717A" 
+                           HorizontalAlignment="Center" 
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,24"/>
 
-            <Button Content="Add New Game" 
-                    Command="{Binding NavigateMakeGameCommand}" 
-                    Height="38" 
-                    Margin="0,0,0,8" 
-                    Background="#3498DB" 
-                    Foreground="White" 
-                    FontWeight="Bold"/>
+                <Border Height="1" Background="#2A2A32" Margin="0,0,0,24"/>
 
-            <Button Content="Add New Character" 
-                    Command="{Binding NavigateMakeCharacterCommand}" 
-                    Height="38" 
-                    Margin="0,0,0,8"/>
+                <!-- Dashboard Quick Actions -->
+                <TextBlock Text="QUICK ACTIONS" 
+                           FontSize="11" 
+                           FontWeight="Bold" 
+                           Foreground="#71717A"
+                           Margin="4,0,0,12"/>
 
-            <Button Content="Add New Move" 
-                    Command="{Binding NavigateMakeMoveCommand}" 
-                    Height="38"/>
+                <Button Content="+ Add New Game" 
+                        Command="{Binding NavigateMakeGameCommand}" 
+                        Style="{StaticResource ActionButtonStyle}"/>
 
-        </StackPanel>
-    </Border>
+                <Button Content="+ Add New Character" 
+                        Command="{Binding NavigateMakeCharacterCommand}" 
+                        Style="{StaticResource ActionButtonStyle}"/>
+
+                <Button Content="+ Add New Move" 
+                        Command="{Binding NavigateMakeMoveCommand}" 
+                        Style="{StaticResource ActionButtonStyle}"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>
