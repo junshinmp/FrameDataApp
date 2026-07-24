@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\ListViews\" />
+    <Folder Include="ViewModel\ListViewModels\" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ using FrameDataApp.Services;
 using FrameDataApp.Stores;
 using System.Windows.Input;
 
-namespace FrameDataApp.ViewModel
+namespace FrameDataApp.ViewModel.MakeViewModels
 {
     public class MakeCharacterViewModel : ViewModelBase
     {

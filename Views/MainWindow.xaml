@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodel="clr-namespace:FrameDataApp.ViewModel"
+        xmlns:makeViewModel="clr-namespace:FrameDataApp.ViewModel.MakeViewModels"
         xmlns:views="clr-namespace:FrameDataApp.Views"
         xmlns:makeViews="clr-namespace:FrameDataApp.Views.MakeViews"
         mc:Ignorable="d"
@@ -12,7 +13,7 @@
 
     <DockPanel Background="#0F0F12">
         <!-- 1. Permanent Top Navigation Header -->
-        <views:NavBarView DockPanel.Dock="Top" DataContext="{Binding NavbarViewModel}" />
+        <views:NavBarView DockPanel.Dock="Top" DataContext="{Binding NavBarViewModel}" />
 
         <!-- 2. Dynamic Main Screen Content -->
         <Grid>
@@ -25,13 +26,13 @@
                     </DataTemplate>
 
                     <!-- Add Form Views -->
-                    <DataTemplate DataType="{x:Type viewmodel:MakeCharacterViewModel}">
+                    <DataTemplate DataType="{x:Type makeViewModel:MakeCharacterViewModel}">
                         <makeViews:MakeCharacterView />
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodel:MakeGameViewModel}">
+                    <DataTemplate DataType="{x:Type makeViewModel:MakeGameViewModel}">
                         <makeViews:MakeGameView />
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodel:MakeMoveViewModel}">
+                    <DataTemplate DataType="{x:Type makeViewModel:MakeMoveViewModel}">
                         <makeViews:MakeMoveView />
                     </DataTemplate>
                 </ContentControl.Resources>

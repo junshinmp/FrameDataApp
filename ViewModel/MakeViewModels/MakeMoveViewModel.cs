@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 
-namespace FrameDataApp.ViewModel
+namespace FrameDataApp.ViewModel.MakeViewModels
 {
     public class MakeMoveViewModel : ViewModelBase
     {

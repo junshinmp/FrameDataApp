@@ -14,6 +14,7 @@ namespace FrameDataApp.ViewModel
         public MainViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
+
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
 

@@ -1,6 +1,7 @@
 ﻿using FrameDataApp.Commands;
 using FrameDataApp.Services;
 using FrameDataApp.Stores;
+using FrameDataApp.ViewModel.MakeViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
