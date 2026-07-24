@@ -1,4 +1,5 @@
-﻿using FrameDataApp.Services;
+﻿using FrameDataApp.Commands;
+using FrameDataApp.Services;
 using System.Windows.Input;
 
 namespace FrameDataApp.ViewModel
@@ -39,6 +40,7 @@ namespace FrameDataApp.ViewModel
         public MakeGameViewModel(GameService gameService)
         {
             _service = gameService;
+            SubmitCommand = new MakeGameCommand(this, _service);
         }
     }
 }
