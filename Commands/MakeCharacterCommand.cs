@@ -5,11 +5,28 @@ using System.Windows;
 
 namespace FrameDataApp.Commands
 {
+    /// <summary>
+    /// Class <c>MakeCharacterCommand</c> inherits from <c>CommandBase</c>,
+    /// ensuring that all properties of making a character are collected
+    /// properly from the <c>MakeCharacterView</c>.
+    /// 
+    /// This inherits all properties from the <c>CommandBase</c> class.
+    /// </summary>
     public class MakeCharacterCommand : CommandBase
     {
+        /// <summary>
+        /// Holds the local viewmodel and CharacterService
+        /// in for executing and transfering data properly.
+        /// </summary>
         private readonly MakeCharacterViewModel _viewModel;
         private readonly CharacterService _characterService;
 
+        /// <summary>
+        /// Default Constructor for <c>MakeCharacterCommand</c>, requiring
+        /// a pass of viewModel, characterService for proper functionality.
+        /// </summary>
+        /// <param name="viewModel"></param> Local Viewmodel for making Character
+        /// <param name="characterService"></param> Local Service for Character functions
         public MakeCharacterCommand(MakeCharacterViewModel viewModel, CharacterService characterService)
         {
             _viewModel = viewModel;
@@ -17,10 +34,18 @@ namespace FrameDataApp.Commands
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
+        /// <summary>
+        /// Checks if the name field is properly implemented,
+        /// greying out the button if the name field is not
+        /// filled out in the form.
+        /// </summary>
+        /// <param name="parameter"></param> Name field in the form.
+        /// <returns></returns> Whether the field is empty or not.
         public override bool CanExecute(object? parameter)
         {
             return !string.IsNullOrWhiteSpace(_viewModel.Name) && base.CanExecute(parameter);
         }
+
 
         public override void Execute(object? parameter)
         {
