@@ -21,7 +21,6 @@ namespace FrameDataApp.ViewModel
         private int _onBlock;
 
         private CancelType? _selectedCancelType;
-
         public string CharacterName
         {
             get => _characterName;

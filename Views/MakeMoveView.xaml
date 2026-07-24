@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:FrameDataApp.Views"
              xmlns:vm="clr-namespace:FrameDataApp.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
 
     <UserControl.DataContext>
         <vm:MakeMoveViewModel />
@@ -20,6 +20,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
@@ -27,7 +28,24 @@
                    FontWeight="Bold"
                    Text="Make Move"/>
 
-        <Grid Grid.Row="1" Margin="0,20,0,15">
+        <!-- NEW: Character Selector -->
+        <Grid Grid.Row="1" Margin="0,15,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Select Character" FontWeight="SemiBold"/>
+            <ComboBox Grid.Row="1" 
+                      Margin="0,5,0,0" 
+                      Height="30" 
+                      VerticalContentAlignment="Center"
+                      ItemsSource="{Binding AvailableCharacters}"
+                      SelectedItem="{Binding CharacterName}"/>
+        </Grid>
+
+        <!-- Move Name -->
+        <Grid Grid.Row="2" Margin="0,0,0,15">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -41,7 +59,8 @@
                      Text="{Binding MoveName, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
 
-        <Grid Grid.Row="2" Margin="0,0,0,15">
+        <!-- Command Input -->
+        <Grid Grid.Row="3" Margin="0,0,0,15">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -55,7 +74,8 @@
                      Text="{Binding CommandInput, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
 
-        <Grid Grid.Row="3" Margin="0,0,0,15">
+        <!-- Frame Data Expander -->
+        <Grid Grid.Row="4" Margin="0,0,0,15">
             <Expander Header="Frame Data Setup" 
                       FontWeight="SemiBold"
                       IsExpanded="False">
@@ -97,7 +117,8 @@
             </Expander>
         </Grid>
 
-        <Grid Grid.Row="4" Margin="0,0,0,20">
+        <!-- Cancel Options -->
+        <Grid Grid.Row="5" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -112,10 +133,11 @@
                       SelectedItem="{Binding SelectedCancelType}"/>
         </Grid>
 
-        <StackPanel Grid.Row="5"
+        <!-- Submit Button -->
+        <StackPanel Grid.Row="6"
                     Margin="0,10,0,0"
                     Orientation="Horizontal">
-            <Button Content="Save Move" Command="{Binding SaveMoveCommand}"/>
+            <Button Content="Save Move" Command="{Binding SaveMoveCommand}" Width="120" Height="32"/>
         </StackPanel>
     </Grid>
 </UserControl>

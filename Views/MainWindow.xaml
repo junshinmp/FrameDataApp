@@ -9,7 +9,7 @@
 
     <Grid Margin="20 10" MaxWidth="600">
         
-        <views:MakeGameView Loaded="MakeGameView_Loaded"/>
+        <views:MakeMoveView Loaded="MakeMoveView_Loaded"/>
 
     </Grid>
 </Window>
